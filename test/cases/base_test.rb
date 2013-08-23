@@ -867,11 +867,17 @@ class BaseTest < ActiveSupport::TestCase
     matz.address = StreetAddress.find(1, :params => {:person_id => matz.id})
     matz.non_ar_hash = {:not => "an ARes instance"}
     matz.non_ar_arr = ["not", "ARes"]
+    matz.number_attr = 123
+    matz.boolean_attr = true
+    matz.nil_attr = nil
     matz_c = matz.clone
     assert matz_c.new?
     assert_raise(NoMethodError) {matz_c.address}
     assert_equal matz.non_ar_hash, matz_c.non_ar_hash
     assert_equal matz.non_ar_arr, matz_c.non_ar_arr
+    assert_equal matz.number_attr, matz_c.number_attr
+    assert_equal matz.boolean_attr, matz_c.boolean_attr
+    assert_nil matz_c.nil_attr,
 
     # Test that actual copy, not just reference copy
     matz.non_ar_hash[:not] = "changed"
